@@ -1,0 +1,8 @@
+#Ignorar el archivo con los datos
+.env
+apiEnv
+pruebas.py
+config.py
+__pycache__
+migrations/
+alembic.ini

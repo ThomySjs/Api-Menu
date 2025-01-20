@@ -1,0 +1,332 @@
+{% extends base_template %}
+{% block estilo %}
+<style>
+    *{
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    .container {
+        max-width: auto;
+        max-height: auto;
+    }
+
+    .navbar {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background-color: black;
+        padding: 1.1em;
+    }
+
+    .navbar img {
+        vertical-align: middle;
+        width: 50px;
+    }
+
+    .navbar button {
+        vertical-align: middle;
+        border: none;
+        background-color: #000000;
+        color: white;
+        font-size: 1.5em;
+    }
+
+    .busqueda {
+        background-image: linear-gradient(180deg, #061d49, #417cc2);
+        background-color: #061d49;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        padding-top: 5em;
+        padding-bottom: 10em;
+        align-items: center;
+        border-bottom: 10px solid white;
+    }
+
+    .Grupos-busqueda {
+        margin: 0.6em;
+        background-color: #020f25;
+        width: auto;
+        padding: 2em;
+        border: 2px solid #ccc;
+        font-family: oswald, sans-serif;
+    }
+
+    .Grupos-busqueda a{
+        color: white;
+        text-decoration: none;
+    }
+
+    .menu {
+        background-color: #417cc2;
+        padding-top: 3em;
+        font-family: oswald, sans-serif;
+        font-size: 14px;
+    }
+
+    .Grupos-Menu {
+        color: white;
+        margin: 1em;
+        padding-bottom: 1em;
+        text-align: center;
+        font-size: 2em;
+    }
+
+
+    .productos {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5em;
+        padding: 1.5em 0;
+        border-bottom: 2px solid #ccc;
+    }
+
+    .menu-item {
+        padding: 0 3em;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .descripcion { 
+        padding: 0 3em;
+        margin-bottom: 2em;
+    }
+
+    .descripcion p {
+        font-size: 1.5em;
+        color: white;
+    }
+
+    .menu-item p {
+        font-size: 2em;
+        color: white;
+    }
+
+    @media screen and (min-width: 992px) {
+        
+        .menu {
+            font-size: 16px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            flex-direction: column;
+            height: 100%;
+            position: fixed;
+            justify-content: space-between;
+            background-color: black;
+            padding: 1.1em;
+            width: 5%;
+        }
+
+        .menu {
+            flex-grow: 1;
+            align-self: stretch;
+            margin-left: 55%;
+        }
+
+        .busqueda {
+            flex-grow: 1;
+            align-self: stretch;
+            border-bottom: 0;
+            width: 50%;
+            height: 100%;
+            margin-left: 5%;
+            position: fixed;
+            overflow-y: auto;
+        }
+
+        .Grupos-Menu {
+            color: white;
+            margin: 1em;
+            padding-bottom: 1em;
+            text-align: center;
+            font-size: 3em;
+        }
+
+        .menu-item p {
+            font-size: 3em;
+            color: white;
+        }
+
+        .descripcion p {
+            font-size: 2.5em;
+            color: white;
+        }
+    }
+
+</style>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="navbar">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Alfreddo" class="logo">
+    </div>
+    <div class="busqueda">
+        <h2 class="Grupos-busqueda">
+            <a href="#acompaniar">PARA ACOMPAÑAR</a>
+        </h2>
+        <h2 class="Grupos-busqueda">
+            <a href="#pasteleria">PASTELERÍA CON HELADO</a>
+        </h2>
+        <h2 class="Grupos-busqueda">
+            <a href="#salados">SÁNDWICH SALADOS</a>
+        </h2>
+        <h2 class="Grupos-busqueda">
+            <a href="#sin-tacc">SIN TACC</a>
+        </h2>
+        <h2 class="Grupos-busqueda">
+            <a href="#cafe">CAFÉ</a>
+        </h2>
+        <h2 class="Grupos-busqueda">
+            <a href="#gourmet">CAFÉ GOURMET</a>
+        </h2>
+        <h2 class="Grupos-busqueda">
+            <a href="#te">TÉ Y OTROS</a>
+        </h2>
+        <h2 class="Grupos-busqueda">
+            <a href="#promos">PROMOS CAFETERÍA</a>
+        </h2>
+    </div>
+    <div class="menu">
+        <h2 class="Grupos-Menu" id="acompaniar">
+            PARA ACOMPAÑAR
+        </h2>
+        <div class="productos">
+            {% for product in data %}
+                {% if product[3] == 'Para acompañar' %}
+                    <div class="menu-item">
+                        <p> {{product[0]}} </p>
+                        <p> ${{product[1]}} </p>
+                    </div>
+                    <div class="descripcion">
+                        <p> {{product[2]}} </p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <h2 class="Grupos-Menu" id="pasteleria">
+            PASTELERÍA CON HELADO
+        </h2>
+        <div class="productos">
+            {% for product in data %}
+                {% if product[3] == 'Pastelería' %}
+                    <div class="menu-item">
+                        <p> {{product[0]}} </p>
+                        <p> ${{product[1]}} </p>
+                    </div>
+                    <div class="descripcion">
+                        <p> {{product[2]}} </p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <h2 class="Grupos-Menu" id="salados">
+            SÁNDWICH SALADOS
+        </h2>
+        <div class="productos">
+            {% for product in data %}
+                {% if product[3] == 'Sándwich Salados' %}
+                    <div class="menu-item">
+                        <p> {{product[0]}} </p>
+                        <p> ${{product[1]}} </p>
+                    </div>
+                    <div class="descripcion">
+                        <p> {{product[2]}} </p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <h2 class="Grupos-Menu" id="sin-tacc">
+            SIN TACC
+        </h2>
+        <div class="productos">
+            {% for product in data %}
+                {% if product[3] == 'Sin tacc' %}
+                    <div class="menu-item">
+                        <p> {{product[0]}} </p>
+                        <p> ${{product[1]}} </p>
+                    </div>
+                    <div class="descripcion">
+                        <p> {{product[2]}} </p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <h2 class="Grupos-Menu" id="cafe">
+            CAFÉ
+        </h2>
+        <div class="productos">
+            {% for product in data %}
+                {% if product[3] == 'Café' %}
+                    <div class="menu-item">
+                        <p> {{product[0]}} </p>
+                        <p> ${{product[1]}} </p>
+                    </div>
+                    <div class="descripcion">
+                        <p> {{product[2]}} </p>
+                    </div>
+                {% endif %} 
+            {% endfor %}
+        </div>
+        <h2 class="Grupos-Menu" id="gourmet">
+            CAFÉ GOURMET
+        </h2>
+        <div class="productos">
+            {% for product in data %}
+                {% if product[3] == 'Café gourmet' %}
+                    <div class="menu-item">
+                        <p> {{product[0]}} </p>
+                        <p> ${{product[1]}} </p>
+                    </div>
+                    <div class="descripcion">
+                        <p> {{product[2]}} </p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <h2 class="Grupos-Menu" id="te">
+            TÉ Y OTROS
+        </h2>
+        <div class="productos">
+            {% for product in data %}
+                {% if product[3] == 'Té y otros' %}
+                    <div class="menu-item">
+                        <p> {{product[0]}} </p>
+                        <p> ${{product[1]}} </p>
+                    </div>
+                    <div class="descripcion">
+                        <p> {{product[2]}} </p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <h2 class="Grupos-Menu" id="promos">
+            PROMOS CAFETERÍA
+        </h2>
+        <div class="productos">
+            {% for product in data %}
+                {% if product[3] == 'Promos cafetería' %}
+                    <div class="menu-item">
+                        <p> {{product[0]}} </p>
+                        <p> ${{product[1]}} </p>
+                    </div>
+                    <div class="descripcion">
+                        <p> {{product[2]}} </p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
