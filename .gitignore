@@ -1,6 +1,6 @@
 #Ignorar el archivo con los datos
 .env
-apiEnv
+apiEnv/
 pruebas.py
 config.py
 __pycache__
