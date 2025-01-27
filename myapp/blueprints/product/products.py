@@ -137,7 +137,7 @@ def add_product():
     try:
         user = json.loads(get_jwt_identity())
         product = products(product_name=data["product_name"], price=data["price"], description=data["description"], category=data["category"], available=data["available"])
-        log = change_logg(user_id = user["id"], log=f"{user["name"]} added a product:  {data["product_name"]}")
+        log = change_logg(user_id = user["id"], log=f'{user["name"]} added a product:  {data["product_name"]}')
         db.session.add(product)
         db.session.add(log)
         db.session.commit()
@@ -211,7 +211,7 @@ def update_product():
         result= db.session.execute(db.update(products).where(products.product_id == data["product_id"]).values(product_name=data["product_name"], description=data["description"], price=data["price"], available=data["available"], category=data["category"]))
         if not result.rowcount:
             return jsonify({"error": "The product doesnt exists."}), 404
-        log = change_logg(user_id = user["id"], log=f"{user["name"]} changed a product:  {data["product_name"]}")
+        log = change_logg(user_id = user["id"], log=f'{user["name"]} changed a product:  {data["product_name"]}')
         db.session.add(log)
         db.session.commit()
         return jsonify({"message": "Product updated!"}), 200
@@ -282,7 +282,7 @@ def delete_product():
         if not product_name:
             return jsonify({"error": "The product doenst exists."}), 404
         db.session.execute(db.delete(products).where(products.product_id == data["product_id"]))
-        log = change_logg(user_id=user["id"], log=f"{user["name"]} deleted a product: {product_name[0]}")
+        log = change_logg(user_id=user["id"], log=f'{user["name"]} deleted a product: {product_name[0]}')
         db.session.add(log)
         db.session.commit()
         return jsonify({"message": "Product deleted!"}), 200
