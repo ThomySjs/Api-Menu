@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, url_for, request, session, flash
+from flask import Blueprint, redirect, render_template, url_for
 from myapp import db, products
 
 bp_menu = Blueprint("bp_menu", __name__, template_folder="templates")

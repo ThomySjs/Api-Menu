@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from myapp import db, products, change_logg, jwt
+from myapp import db, products, change_logg
 import json
 
 bp_product = Blueprint("bp_product", __name__)
