@@ -1,8 +1,10 @@
 from .extensions import db
-from sqlalchemy import func
+from sqlalchemy import func, ForeignKey, String, Integer, Boolean, Numeric, CheckConstraint, DateTime
+from sqlalchemy.orm import Mapped, mapped_column
 import bcrypt
 
 class users(db.Model):
+    __tablename__ = "users"
     """
         Manages the user`s data.
 
@@ -18,12 +20,12 @@ class users(db.Model):
         - hash_password()
         - check_password()
     """
+    user_id : Mapped[int] = mapped_column(primary_key=True)
+    user_name : Mapped[str] = mapped_column(String(50), nullable=False)
+    email : Mapped[str] =  mapped_column(String(150), nullable=False, unique=True)
+    password : Mapped[str] = mapped_column(String(150), nullable=False)
+    verified : Mapped[bool] = mapped_column(Boolean, default=False)
     __table_args__ = {'extend_existing': True} 
-    user_id = db.Column(db.Integer, primary_key=True)
-    user_name = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.String(150), nullable=False, unique=True)
-    password = db.Column(db.String(150), nullable=False)
-    verified = db.Column(db.Boolean, default=False)
 
     def toDict(self):
         """
@@ -87,6 +89,7 @@ class users(db.Model):
         return f"Name: {self.user_name}, Email: {self.email}"
 
 class products(db.Model):
+    __tablename__ = "products"
     """
         Manages the product data.
 
@@ -101,14 +104,14 @@ class products(db.Model):
         ### Methods:
         - toDict() 
     """
-    product_id = db.Column(db.Integer, primary_key=True)
-    product_name = db.Column(db.String(150), nullable=False)
-    price = db.Column(db.Numeric(10, 2), nullable=False)
-    description = db.Column(db.String(250), nullable=False)
-    category = db.Column(db.String(50), nullable=False)
-    available = db.Column(db.Boolean, default=True)
+    product_id : Mapped[int] = mapped_column(Integer, primary_key=True)
+    product_name: Mapped[str] = mapped_column(String(150), nullable=False)
+    price : Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
+    description : Mapped[str] = mapped_column(String(250), nullable=False)
+    category : Mapped[str] = mapped_column(String(50), nullable=False)
+    available : Mapped[bool] = mapped_column(Boolean, default=True)
     __table_args__ = (
-        db.CheckConstraint('price > 0', name='check_price_positive'),)
+        CheckConstraint('price > 0', name='check_price_positive'),)
 
     def toDict(self):
         """
@@ -139,6 +142,7 @@ class products(db.Model):
         return f"id: {self.product_id}, product_name : {self.product_name}, price: {self.price}, description : {self.description}, category : {self.category}, available : {self.available}"
     
 class change_logg(db.Model):
+    __tablename__ = "log"
     """
         Manages changes made in the database.
 
@@ -151,10 +155,10 @@ class change_logg(db.Model):
         ### Methods:
         - toDict() 
     """
-    id_log = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
-    log = db.Column(db.String(250), nullable=False)
-    date = db.Column(db.DateTime, default=func.now())
+    id_log : Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id : Mapped[int] = mapped_column(Integer, ForeignKey('users.user_id'), nullable=False)
+    log : Mapped[str] = mapped_column(String(250), nullable=False)
+    date : Mapped[DateTime] = mapped_column(DateTime, server_default=func.now())
 
     def toDict(self):
         """

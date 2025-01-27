@@ -3,12 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from myapp import db, products, change_logg, jwt
 import json
 
-
 bp_product = Blueprint("bp_product", __name__)
-
-@jwt.user_identity_loader
-def user_loader(user):
-    return json.dumps(user)
 
 @bp_product.route("/products", methods=["POST"])
 @jwt_required()
@@ -147,7 +142,7 @@ def add_product():
         db.session.add(log)
         db.session.commit()
 
-        return jsonify({"message": "Product added!"}), 200
+        return jsonify({"message": "Product added!"}), 201
     except Exception as e:
         print(f"Error: {e}")
         db.session.rollback()
@@ -260,6 +255,8 @@ def delete_product():
             {"error": "Request must be JSON type."}
             {"error": "Missing key: product_id"}
 
+        - 401 Unathorized access #This happens when JWT expires or is invalid. 
+
         - 404 Not found
 
             {"error": "The product doenst exists."}
@@ -293,6 +290,64 @@ def delete_product():
         db.session.rollback()
         print(f"Error: {e}")
         return jsonify({"error": "An internal error occurred. Please try again later."}), 500
+    
+@bp_product.route("/products/<int:ID>", methods=["GET"])
+@jwt_required()
+def get_product_id(ID):
+    """
+    Returns the product with the given ID, error message if the product doesnt exists.
+
+    ### Endpoint:
+    - Method: GET
+    - URL: /products/<id:int>
+    - Content-type: JSON
+
+    ### Authorization:
+    - This endpoint is protected by JWT validation.
+
+    ### Header example:
+
+        {"Authorization": "Bearer {JWT-HERE}"}
+
+    ### Responses:
+
+    - 200 Ok
+
+        {
+            "product_id": 1,
+            "product_name": "some name",
+            "price" : 1500.0,
+            "category" : "some category",
+            "description" : "some description",
+            "available" : True
+        }
+
+    - 404 Not found
+
+        {"error": "Product not found"}
+
+    - 400 Bad request
+
+        {"error" : "ID must be a positive integer"}
+    
+    - 500 Internal server error
+
+        {"error" : "Internal server error"}
+    """
+    
+    if not isinstance(ID, int) or ID < 0:
+        return jsonify({"error" : "ID must be a positive integer"}), 400
+    
+    try:
+        product = db.session.query(products).where(products.product_id == ID).first()
+        if product is None:
+            return jsonify({"error": "Product not found."}), 404
+        else:
+            return jsonify(product.toDict()), 200
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        return jsonify({"error" : "Internal server error"}), 500
+
 
 @bp_product.route("/products/changelog", methods=["GET"])
 @jwt_required()

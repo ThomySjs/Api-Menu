@@ -6,3 +6,7 @@ config.py
 __pycache__
 migrations/
 alembic.ini
+instance/
+.db
+script.exe
+.exe

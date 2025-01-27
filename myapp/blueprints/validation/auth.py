@@ -1,12 +1,18 @@
 from flask import Blueprint, request, jsonify
 from myapp.models import users
-from myapp import db
+from myapp import db, jwt
 import os
 from email_validator import validate_email, EmailNotValidError
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_mail import sanitize_address
+from flask_jwt_extended import jwt_required, get_jwt_identity
+import json
 
 auth_bp = Blueprint('auth_bp', __name__)
+
+@jwt.user_identity_loader
+def user_loader(user):
+    return json.dumps(user)
 
 @auth_bp.route("/register", methods=["POST"])
 def register_user():
@@ -156,13 +162,35 @@ def login():
         if not verified:
             return jsonify({"error": "Account is not verified."}), 400
         
-        access_token = create_access_token(identity= {"id": verification_data.user_id, "name": verification_data.user_name})
-        return jsonify({"access_token": access_token}), 200
+        identity= {"id": verification_data.user_id, "name": verification_data.user_name}
+        access_token = create_access_token(identity=identity)
+        refresh_token = create_refresh_token(identity=identity)
+        return jsonify(access_token=access_token, refresh_token=refresh_token), 200
     except EmailNotValidError:
         return jsonify({"error": "Invalid email"}), 400
     except Exception as e:
         print(f"Error: {str(e)}")
         return jsonify({"error": "Internal server error, try again."}), 500
+    
+@auth_bp.route("/refresh", methods=["POST"])
+@jwt_required(refresh=True)
+def refresh_token():
+    """
+        Returns a new acces token and refresh token using a previous refresh token.
+
+        ### Endpoint
+        - Method: POST
+        - URL: /refresh
+
+        ### Authorization:
+        - This endpoint uses JWT for authorization.
+
+    """
+    identity = json.loads(get_jwt_identity())
+    access_token = create_access_token(identity=identity)
+    refresh_token = create_refresh_token(identity=identity)
+    return jsonify(access_token = access_token, refresh_token=refresh_token), 200
+    
 
     
 
