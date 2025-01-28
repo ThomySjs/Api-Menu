@@ -7,6 +7,8 @@ from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_mail import sanitize_address
 from flask_jwt_extended import jwt_required, get_jwt_identity
 import json
+from ..email.mail import send_email
+from smtplib import SMTPException
 
 auth_bp = Blueprint('auth_bp', __name__)
 
@@ -83,7 +85,7 @@ def register_user():
         user = users(user_name=data["name"], email=mail, password=hashed_password_str)
         db.session.add(user)
         db.session.commit()
-
+        send_email(mail)
         return jsonify({"message": "Account succesfully created!"}), 201
     except Exception as e:
         db.session.rollback()
@@ -160,7 +162,15 @@ def login():
         
         #Checks if the email is verified.
         if not verified:
-            return jsonify({"error": "Account is not verified."}), 400
+            try:
+                send_email(mail)
+                return jsonify({"error": "Account is not verified. Check your email"}), 401
+            except SMTPException as e:
+                print(f"SMTP error: {(e)}")
+                return jsonify({"error": "Failed to send the email."}), 500
+            except Exception as e:
+                print(f"An error ocurred: {e}")
+                return jsonify({"error": "An internal error occurred. Please try again later."}), 500
         
         identity= {"id": verification_data.user_id, "name": verification_data.user_name}
         access_token = create_access_token(identity=identity)

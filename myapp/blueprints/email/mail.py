@@ -8,8 +8,19 @@ from smtplib import SMTPException
 
 bp_mail = Blueprint("bp_mail", __name__, template_folder='templates')
 
+def send_email(mail):
+        serializer = URLSafeTimedSerializer(os.getenv("SECRET_KEY"))
+        token = serializer.dumps(mail, salt=os.getenv("SECURITY_SALT"))
+        msg = Message(
+            'Email verification',
+            recipients=[mail],
+            html= render_template('template.html', key = token),
+            sender=os.getenv('MAIL_DEFAULT_SENDER')
+        )
+        mail_extension.send(msg)
+    
 @bp_mail.route("/send-mail", methods=["POST"])
-def send_email():
+def resend_email():
     """
         Sends a confirmation link to the given email.
 
@@ -81,15 +92,7 @@ def send_email():
     if verification_data[1]:
         return jsonify({"error": "Email is already verified."}), 400
     try:
-        serializer = URLSafeTimedSerializer(os.getenv("SECRET_KEY"))
-        token = serializer.dumps(mail, salt=os.getenv("SECURITY_SALT"))
-        msg = Message(
-            'Email verification',
-            recipients=[mail],
-            html= render_template('template.html', key = token),
-            sender=os.getenv('MAIL_DEFAULT_SENDER')
-        )
-        mail_extension.send(msg)
+        send_email(mail)
         return jsonify({"message": "Email sent"}), 200
     except SMTPException as e:
         print(f"SMTP error: {(e)}")
