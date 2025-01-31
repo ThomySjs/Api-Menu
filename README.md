@@ -102,9 +102,18 @@ Protección : JWT refresh token.
 
 <h3><strong>Obtener productos</strong></h3>
 <h4>
+Devuelve una lista con los productos e informacion basica de cada uno (Nombre, Precio, Categoria y Descripción).<br><br>
+
+Método : GET <br>
+URL : /products <br>
+</h4>
+
+<h3><strong>Obtener productos completos</strong></h3>
+<h4>
+Devuelve una lista con los productos y la informacion completa de cada uno, incluida la disponibilidad y la ID.<br><br>
 
 Método : POST <br>
-URL : /products <br>
+URL : /products/data <br>
 Content-type : application / JSON<br>
 Protección : JWT. <br>
 Ejemplo de petición: <br><br>

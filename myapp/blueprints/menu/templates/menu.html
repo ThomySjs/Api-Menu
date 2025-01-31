@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link rel="stylesheet" href="{{ url_for('bp_menu.static', filename='style.css') }}">
+</head>
+<body>
+    <div class="banner">
+        <div class="container" id="container">
+            <nav>
+                <img src="{{ url_for('bp_menu.static', filename='logo.png') }}" alt="Alfreddo">
+            </nav>
+            <div class="options" id="options">
+            </div>
+            <div class="tables" id="tables">
+
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('bp_menu.static', filename='options.js') }}"></script>
+    <script src="{{ url_for('bp_menu.static', filename='menu.js') }}"></script>
+</body>
+</html>

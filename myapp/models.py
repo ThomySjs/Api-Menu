@@ -112,6 +112,27 @@ class products(db.Model):
     available : Mapped[bool] = mapped_column(Boolean, default=True)
     __table_args__ = (
         CheckConstraint('price > 0', name='check_price_positive'),)
+    
+    def to_basic_dict(name, price, description, category):
+        """
+            Returns a dictionary containing the product data.
+
+            Example: 
+                print(product.toDict()) 
+
+                {
+                    "product_name" : somename,
+                    "price" : 1500.0,
+                    "description": somedescription,
+                    "category": somecategory,
+                }
+        """
+        return {
+                "product_name": name, 
+                "price": price, 
+                "description": description,
+                "category": category,
+            }
 
     def toDict(self):
         """

@@ -3,17 +3,28 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from myapp import db, products, change_logg
 import json
 
+
 bp_product = Blueprint("bp_product", __name__)
 
-@bp_product.route("/products", methods=["POST"])
-@jwt_required()
+@bp_product.route("/products", methods=["GET"])
 def get_products():
+    try:
+        product_list = db.session.execute(db.select(products.product_name, products.price, products.description, products.category)).all() 
+        product_list = [products.to_basic_dict(product[0], product[1], product[2], product[3]) for product in product_list]
+        return jsonify(product_list), 200
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify(error="Internal server error."), 500
+
+@bp_product.route("/products/data", methods=["POST"])
+@jwt_required()
+def get_products_data():
     """
         Returns a JSON object containing a list of products sorted by the given key. This endpoint is protected by JWT validation.
 
         ### Endpoint
         - Method: POST
-        - URL: /products
+        - URL: /products/data
         - Content-type: JSON
 
         ### Authorization

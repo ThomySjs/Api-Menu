@@ -1,7 +1,7 @@
 from flask import Blueprint, redirect, render_template, url_for
 from myapp import db, products
 
-bp_menu = Blueprint("bp_menu", __name__, template_folder="templates")
+bp_menu = Blueprint("bp_menu", __name__, template_folder="templates", static_folder="static", static_url_path="/menu/static")
 
 
 @bp_menu.route("/")
@@ -11,7 +11,7 @@ def idle():
     """
     return redirect(url_for("bp_menu.menu"))
 
-@bp_menu.route("/Menu", methods=["GET"])
+@bp_menu.route("/menu", methods=["GET"])
 def menu():
     """
         Returns a template of the menu.
@@ -38,4 +38,4 @@ def menu():
     except Exception as e:
         print(f"Error: {e}")
         return "Internal server error"
-    return render_template('MenuC.html', base_template = base_template, data = data)
+    return render_template('menu.html')
