@@ -11,10 +11,11 @@ bp_mail = Blueprint("bp_mail", __name__, template_folder='templates')
 def send_email(mail):
         serializer = URLSafeTimedSerializer(os.getenv("SECRET_KEY"))
         token = serializer.dumps(mail, salt=os.getenv("SECURITY_SALT"))
+        route = os.getenv('WEB_URL') + "/validate/%s" % token
         msg = Message(
             'Email verification',
             recipients=[mail],
-            html= render_template('template.html', key = token),
+            html= render_template('template.html', route = route),
             sender=os.getenv('MAIL_DEFAULT_SENDER')
         )
         mail_extension.send(msg)
