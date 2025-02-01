@@ -9,7 +9,7 @@ bp_product = Blueprint("bp_product", __name__)
 @bp_product.route("/products", methods=["GET"])
 def get_products():
     try:
-        product_list = db.session.execute(db.select(products.product_name, products.price, products.description, products.category)).all() 
+        product_list = db.session.execute(db.select(products.product_name, products.price, products.description, products.category).where(products.available == True)).all() 
         product_list = [products.to_basic_dict(product[0], product[1], product[2], product[3]) for product in product_list]
         return jsonify(product_list), 200
     except Exception as e:
