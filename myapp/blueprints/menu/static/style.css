@@ -12,10 +12,12 @@
     background-image: linear-gradient(rgba(48, 48, 48, 0.75), rgba(48, 48, 48, 0.75)), url(background.jpg);
     background-size: cover;
     background-position: center;
+    display: flex;
+
 }
 
 .container {
-    width: 100%;
+    flex-grow: 1;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -36,58 +38,65 @@ nav img {
 
 .options {  
     float: top;
-    width: 100vp;
+    flex-grow: 1;
     text-align: center;
     margin-bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
 
 }
 
 .options a {
-    display: block;
-    margin-bottom: 30px;
-    margin-top: 30px;
+    margin-top: 15px;
 }
+
 
 .options button {
-    background-color: black;
-    font-size: 40px;
+    background-color: rgba(0, 0, 0, 0.8);
+    font-size: 2.5em;
     color: white;
     padding: 10px;
-    border: hidden;
+    border: solid black;
+    cursor: pointer;
 }
 
-.tables {
+.options button:hover {
+    background-color: rgb(24, 24, 24);
+}
+
+
+.all-tables-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.two-tables-container {
     background-color: #009FE3;
-    margin-left: 10px;
-    margin-right: 10px;
+    height: 100%;
     border: none;
-    width: 100vp;
     float: top;
+    display: flex;
+    justify-content:space-evenly;
+    flex-wrap: wrap;
+    padding-bottom: 20px;
+    
 }
 
 .table-container {
-    display: inline;
-    width: 50%;
-    float: left;
+    flex-shrink: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: center;
+    width: 45%;
+    height: 100%;
 }
-
-
-table {
-    color: white;
-    border: hidden;
-    font-size: 2em;
-}
-
-.table-container hr {
-    padding: 10px 20px 10px;
-    margin: 0 auto;
-    width: 80%;
-    border: none;
-    border-top: 2px dotted rgb(255, 255, 255);
-}
-
 
 .headers {
+    flex-shrink: 1;
     color: white;
     text-align: center;
     margin-top: 40px;
@@ -95,14 +104,37 @@ table {
 
 }
 
-td {
+.table-container hr {
+    flex-shrink: 1;
+    padding: 10px 20px 10px;
+    margin: 0 auto;
+    width: 80%;
+    border: none;
+    border-top: 2px dotted rgb(255, 255, 255);
+}
+
+.table-container table {
+    flex-shrink: 1;
+    color: white;
+    border: hidden;
+    font-size: 2em;
+}
+
+.table-container td {
     width: 100%;
     padding: 10px 20px 10px;
 }
 
-td p {
+.table-container td p {
     font-size: 0.5em;
 }
+
+.back-to-top {
+    visibility: hidden;
+    position: absolute;
+}
+
+
 
 @media only screen and (max-width: 800px) {
     .container {
@@ -125,62 +157,50 @@ td p {
         width: 50px;
     }
 
-    .options {  
-        float: top;
-        width: 100vp;
-        text-align: center;
-
-    }
-
-    .options a {
-        display: block;
-        margin-bottom: 30px;
-        margin-top: 30px;
-    }
-
     .options button {
-        background-color: black;
-        font-size: 2em;
-        color: white;
-        padding: 10px;
-        border: hidden;
+        font-size: 1.25em;
     }
+
+    .two-tables-container {
+        flex-grow: 1;
+        flex-direction: column;
+    }
+
 
     .table-container {
-        float: top;
+        flex-direction: column;
+        justify-content: top;
+        align-items: center;
         width: 100%;
+        height: auto;
     }
 
-    table {
+    .headers {
+        font-size: 2em;
+    }
+
+    .table-container table {
         margin-left: 10px;
         margin-right: 10px;
-        border: hidden;
         font-size: 1em;
     }
 
-    hr {
-        margin-left: 10px;
-        margin-right: 10px;
-        border-top: 2px dotted rgb(0, 0, 0);
-        border-bottom: 1px;
-        overflow: visible;
-    }
-
-
-    .headers {
-        text-align: center;
-        margin-top: 40px;
-        margin-left: 10px;
-        margin-right: 10px;
-        font-size: 2em;
-    }
-
-    td {
+    .table-container td {
         width: 100%;
         padding: 10px 20px 10px;
     }
 
-    td p {
+    .table-container td p {
         font-size: 0.25em;
+    }
+
+    .back-to-top {
+        visibility: hidden;
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.8);
+        border: solid black;
+        right: 20px;
+        bottom: 10px;
+        transition: 2s;
     }
 }

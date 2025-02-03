@@ -9,14 +9,19 @@
 <body>
     <div class="banner">
         <div class="container" id="container">
-            <nav>
+            <nav id="#">
                 <img src="{{ url_for('bp_menu.static', filename='logo.png') }}" alt="Alfreddo">
             </nav>
             <div class="options" id="options">
             </div>
-            <div class="tables" id="tables">
+            <div class="all-tables-container" id="all-tables-container">
 
             </div>
+        </div>
+        <div class="back-to-top">
+            <a href="##">
+                <button>Boton</button>
+            </a>
         </div>
     </div>
     <script src="{{ url_for('bp_menu.static', filename='options.js') }}"></script>

@@ -1,4 +1,4 @@
-const container = document.getElementById("container");
+const container = document.getElementById("all-tables-container");
 
 async function get_list() {
     let lista = await fetch('/products').then(response => response.json());
@@ -32,7 +32,7 @@ async function create_tables() {
         if (counter % 2 === 0) {
             container_number ++;
             let cat_container = `
-                <div class="tables" id="tables-${container_number}"></div>
+                <div class="two-tables-container" id="tables-${container_number}"></div>
             `;
             container.insertAdjacentHTML("beforeend", cat_container);
         }
@@ -63,6 +63,8 @@ async function create_tables() {
 
         counter ++;
     });
+
 }
+
 
 create_tables();  // Start the table creation process
