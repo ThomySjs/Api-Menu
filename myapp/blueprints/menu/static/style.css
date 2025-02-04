@@ -195,7 +195,9 @@ nav img {
     }
 
     .back-to-top {
-        visibility: hidden;
+        width: 30px;
+        height: 30px;
+        visibility: visible;
         position: absolute;
         background-color: rgba(0, 0, 0, 0.8);
         border: solid black;
@@ -203,4 +205,12 @@ nav img {
         bottom: 10px;
         transition: 2s;
     }
+
+    .btn {
+        border: none;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+    }
+
 }
