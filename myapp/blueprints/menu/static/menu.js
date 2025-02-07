@@ -55,7 +55,7 @@ async function create_tables() {
             let show_product = `
                 <tr>
                     <td>${producto.product_name}<br><p>${producto.description}</p></td>
-                    <td>${producto.price}</td>
+                    <td id="price">$${Math.round(producto.price)}</td>
                 </tr>
             `;
             select_table.insertAdjacentHTML("beforeend", show_product);

@@ -129,20 +129,22 @@ nav img {
     font-size: 0.5em;
 }
 
-.back-to-top {
+.btn {
     visibility: hidden;
-    position: absolute;
+    position: fixed;
 }
 
-
+#price {
+    font-weight: bold;
+}
 
 @media only screen and (max-width: 800px) {
     .container {
+        position: relative;
         width: 100%;
         height: 100vh;
         display: flex;
         flex-direction: column;
-        overflow-y: scroll;
     }
 
     nav {
@@ -191,26 +193,19 @@ nav img {
     }
 
     .table-container td p {
-        font-size: 0.25em;
-    }
-
-    .back-to-top {
-        width: 30px;
-        height: 30px;
-        visibility: visible;
-        position: absolute;
-        background-color: rgba(0, 0, 0, 0.8);
-        border: solid black;
-        right: 20px;
-        bottom: 10px;
-        transition: 2s;
+        font-size: 0.6em;
     }
 
     .btn {
+        visibility: visible;
+        height: 40px;
+        width: 40px;
+        bottom: 20px;
+        right: 20px;
+        z-index: 9999;
         border: none;
-        width: 100%;
-        height: 100%;
-        background-color: transparent;
+        background-color:  rgba(0, 0, 0, 0.8);
     }
+
 
 }
