@@ -21,21 +21,8 @@ def menu():
         - URL: /Menu 
 
         ### Template
-        - This endpoint renders "MenuC.html" with the available products. MenuC also extends a base template.
-
-        ### Template variables
-        - `base_template`: The base HTML template to be used as a layout.
-        - `data`: A list of tuples containing product information with the following structure:
-            - `product_name` (string): The name of the product.
-            - `price` (float): The price of the product.
-            - `description` (string): A description of the product.
-            - `category` (string): The category to which the product belongs.
-        
+        - This endpoint renders "menu.html" with the available products. M
     """
-    try:
-        data = db.session.execute(db.select(products.product_name, products.price, products.description, products.category).where(products.available == True)).all()
-        base_template = 'base.html'
-    except Exception as e:
-        print(f"Error: {e}")
-        return "Internal server error"
     return render_template('menu.html')
+
+

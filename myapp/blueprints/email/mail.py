@@ -6,16 +6,16 @@ from flask_mail import Message, sanitize_address
 from email_validator import validate_email, EmailNotValidError
 from smtplib import SMTPException
 
-bp_mail = Blueprint("bp_mail", __name__, template_folder='templates')
+bp_mail = Blueprint("bp_mail", __name__, template_folder="templates", static_folder="static")
 
 def send_email(mail):
         serializer = URLSafeTimedSerializer(os.getenv("SECRET_KEY"))
         token = serializer.dumps(mail, salt=os.getenv("SECURITY_SALT"))
-        route = os.getenv('WEB_URL') + "/validate/%s" % token
+        route = request.url_root + "mail/validate/%s" % token
         msg = Message(
             'Email verification',
             recipients=[mail],
-            html= render_template('template.html', route = route),
+            html= render_template('template.html', route = route, request = request),
             sender=os.getenv('MAIL_DEFAULT_SENDER')
         )
         mail_extension.send(msg)
@@ -155,3 +155,4 @@ def validate_token(token):
         print(f"Error: {e}")
         db.session.rollback()
         return jsonify({"error": "An internal error occurred. Please try again later."}), 500
+    

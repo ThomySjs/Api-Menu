@@ -4,41 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Correo de confirmación</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        .container{
+            background-color: cornflowerblue;
+            border: solid;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            width: 50%;
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-size: 0.7em;
+        }
+
+        .content {
+            background-image: url('https://i.ibb.co/99k1kD2V/background.jpg');
+            background-size: cover;
+            width: 50%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content a {
+            background-color: white;
+            text-decoration: none;
+            border: solid black;
+            padding: 10px;
+            border-radius: 10px;
+        }
+    </style>
 </head>
-<body, style="font-family: Arial, Helvetica, sans-serif;">
-    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-            <td align="center" style="padding: 20px;">
-                <table class="content" width="600" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse; border: 1px solid #cccccc;">
-                    <!-- Header -->
-                    <tr>
-                        <td class="header" style="padding: 20px 0px 20px 0px; background-color: royalblue; text-align: center; line-height: 1.6; font-size: 24px; color: aliceblue; border-bottom: #cccccc solid;">
-                        Confirmación de cuenta
-                        </td> 
-                    </tr>
-                    <!-- Body -->
-                    <tr>
-                        <td style="background-image: url('https://i.ibb.co/n79mFdn/fondo.png'); background-repeat: no-repeat; height: 750px;">
-                            <table align="center">
-                                <tr>
-                                    <td style="border: gray solid; font-size: 18px; text-align: center; padding: 10px; color: white; margin: 0px 10px 0px 10px; background-color: royalblue; border-radius: 10px;">
-                                        <a href="{{route}}" target="_blank">
-                                            Click para confirmar!
-                                        </a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>         
-                    <!-- Footer -->
-                    <tr>
-                        <td style="padding: 15px 0px 15px 0px; text-align: center; background-color: black; font-size: 16px; color: #cccccc; border-top: #cccccc solid;">
-                            Api validacion
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>EMAIL DE CONFIRMACIÓN</h1>
+        </div>
+        <div class="content">
+            <a href="{{route}}" target="_blank">
+                Click para confirmar!
+            </a>
+        </div>
+    </div>
 </body>
 </html>

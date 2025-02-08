@@ -36,7 +36,7 @@ def create_app():
 
     #Blueprints
     app.register_blueprint(auth_bp)
-    app.register_blueprint(bp_mail)
+    app.register_blueprint(bp_mail, url_prefix='/mail')
     app.register_blueprint(bp_menu)
     app.register_blueprint(bp_product)
 
